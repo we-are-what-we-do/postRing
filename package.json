@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/uuid": "^9.0.6",
+    "uuid": "^9.0.1"
+  },
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "build": "tsc"
+  }
+}
