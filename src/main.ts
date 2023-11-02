@@ -24,7 +24,8 @@ async function main(): Promise<void>{
     if(!locationId) throw new Error("有効なロケーションピンIDを取得できませんでした"); // ロケーションピン設定が一か所もない場合、エラーを返す
 
     // リングデータの最新インスタンスを取得する
-    const latestRings: RingData[] = await getRingData();
+    const ringsData: RingData[] =  await getRingData();
+    const latestRings: RingData[] = (ringsData.length < positionArray.length) ? ringsData : []; // リング数が70個の場合は、0個として扱う
 
     // 既に使用済みのリング軌道indexの配列を取得する
     usedIndexes = getUsedIndexes(latestRings);
