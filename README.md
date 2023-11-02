@@ -14,3 +14,5 @@
     - `npx ts-node ./src/main.ts {POSTしたい回数}`で、POSTするリングデータ数を指定できます
     - ただし、インスタンスを切り替える処理を実装していません
         - そのため、現在のインスタンスが終了次第、POST処理のループが終了します
+    - POST先は`http://localhost:3854/rings`です
+        - POST先は`/src/constants.ts`の`API_URL`を参照しています
