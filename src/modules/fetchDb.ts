@@ -5,7 +5,12 @@ import { RingData, RingInstance } from '../types';
 import { compareISO8601Dates } from './calculateTimeData';
 
 
-// GETリクエストを行う共通関数
+/**
+ * GETリクエストを行う共通関数
+ * @param {string} apiEndpoint APIのエンドポイント
+ * @param {string} queryParams クエリ文字列
+ * @returns {Promise<Response>} fetch APIのResponse
+ */
 async function makeGetRequest(apiEndpoint: string, queryParams: string = ""): Promise<Response>{
     try {
         const url: string = API_URL + apiEndpoint + queryParams;
@@ -23,7 +28,10 @@ async function makeGetRequest(apiEndpoint: string, queryParams: string = ""): Pr
     }
 }
 
-// ピンの全設定データを取得する関数
+/**
+ * ピンの全設定データを取得する関数
+ * @returns {Promise<FeatureCollection<Point>>} GeoJSON形式のピンの全設定データ
+ */
 export async function getLocationConfig(): Promise<FeatureCollection<Point>>{
     let result: FeatureCollection<Point> | null = null;
 
@@ -36,7 +44,10 @@ export async function getLocationConfig(): Promise<FeatureCollection<Point>>{
     return result;
 }
 
-// リングのデータを取得する関数
+/**
+ * リングのデータを取得する関数
+ * @returns {Promise<RingData[]>} APサーバーから取得したリングデータ
+ */
 export async function getRingData(): Promise<RingData[]>{
     const apiEndpoint: string = "rings";
 
@@ -57,7 +68,12 @@ export async function getRingData(): Promise<RingData[]>{
 }
 
 // 最新のインスタンスのIDを取得する関数
-async function getLatestInstanceId(apiEndpoint: string): Promise<string | null>{
+/**
+ * 最新のインスタンスのIDを取得する関数
+ * @param {string} apiEndpoint 基本的に"rings"を指定
+ * @returns {Promise<string | null>} 最新のリング周回インスタンスのID
+ */
+async function getLatestInstanceId(apiEndpoint: string = "rings"): Promise<string | null>{
     // 全インスタンスを取得する
     const response: Response = await makeGetRequest(apiEndpoint);
     const data: RingInstance[] = await response.json() as RingInstance[];
@@ -85,7 +101,12 @@ async function getLatestInstanceId(apiEndpoint: string): Promise<string | null>{
 }
 
 
-// JSONのPOSTリクエストを行う共通関数
+/**
+ * JSONのPOSTリクエストを行う共通関数
+ * @param {string} apiEndpoint APIのエンドポイント
+ * @param {Object} data POSTしたいデータ
+ * @returns {Promise<Response>} fetch APIのResponse
+ */
 async function makePostRequest(apiEndpoint: string, data: Object): Promise<Response>{
     try {
         const url: string = API_URL + apiEndpoint;
@@ -115,7 +136,11 @@ async function makePostRequest(apiEndpoint: string, data: Object): Promise<Respo
     }
 }
 
-// リングのデータを送信する関数
+/**
+ * リングデータを送信する関数
+ * @param {Object} data POSTしたいリングデータ
+ * @returns {Promise<Response>} fetch APIのResponse
+ */
 export async function postRingData(data: RingData): Promise<Response>{
     const apiEndpoint: string = "rings"; // リングのデータを送信するための、APIのエンドポイント
     const response: Response = await makePostRequest(apiEndpoint, data);
